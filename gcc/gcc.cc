@@ -10306,7 +10306,7 @@ replace_outfile_spec_function (int argc, const char **argv)
   int i;
   /* Must have exactly two arguments.  */
   if (argc != 2)
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
 
   for (i = 0; i < n_infiles; i++)
     {
@@ -10327,7 +10327,7 @@ remove_outfile_spec_function (int argc, const char **argv)
   int i;
   /* Must have exactly one argument.  */
   if (argc != 1)
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
 
   for (i = 0; i < n_infiles; i++)
     {
@@ -10349,17 +10349,17 @@ compare_version_strings (const char *v1, const char *v2)
 
   if (regcomp (&r, "^([1-9][0-9]*|0)(\\.([1-9][0-9]*|0))*$",
 	       REG_EXTENDED | REG_NOSUB) != 0)
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
   rresult = regexec (&r, v1, 0, NULL, 0);
   if (rresult == REG_NOMATCH)
     fatal_error (input_location, "invalid version number %qs", v1);
   else if (rresult != 0)
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
   rresult = regexec (&r, v2, 0, NULL, 0);
   if (rresult == REG_NOMATCH)
     fatal_error (input_location, "invalid version number %qs", v2);
   else if (rresult != 0)
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
 
   return strverscmp (v1, v2);
 }
@@ -10402,7 +10402,7 @@ version_compare_spec_function (int argc, const char **argv)
   if (argc < 3)
     fatal_error (input_location, "too few arguments to %%:version-compare");
   if (argv[0][0] == '\0')
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
   if ((argv[0][1] == '<' || argv[0][1] == '>') && argv[0][0] != '!')
     nargs = 2;
   if (argc != nargs + 3)
@@ -10467,7 +10467,7 @@ include_spec_function (int argc, const char **argv)
   char *file;
 
   if (argc != 1)
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
 
   file = find_a_file (&startfile_prefixes, argv[0], R_OK, true);
   read_specs (file ? file : argv[0], false, false);
@@ -10484,7 +10484,7 @@ find_file_spec_function (int argc, const char **argv)
   const char *file;
 
   if (argc != 1)
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
 
   file = find_file (argv[0]);
   return file;
@@ -10500,7 +10500,7 @@ find_plugindir_spec_function (int argc, const char **argv ATTRIBUTE_UNUSED)
   const char *option;
 
   if (argc != 0)
-    abort ();
+    fancy_abort (__FILE__, __LINE__, __FUNCTION__);
 
   option = concat ("-iplugindir=", find_file ("plugin"), NULL);
   return option;
